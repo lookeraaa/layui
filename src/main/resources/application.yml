@@ -5,9 +5,9 @@ spring:
     name: LayerApplication
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/test?serverTimezone=UTC&userUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/layui?serverTimezone=UTC&userUnicode=true&characterEncoding=utf-8
     username: root
-    password: 123456
+    password: 130999
   mvc:
     static-path-pattern: /**
   resources:

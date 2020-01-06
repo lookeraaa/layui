@@ -1,0 +1,30 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>登录页面</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+</head>
+<body class="layui-layout-body">
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<h1>这是登录页面</h1>
+<font color="red" th:text="${msg }"></font>
+<form action="/login" method="post">
+    <input type="text" name="username" required="required" placeholder="请输入登录名"  class="layui-input">
+    <br>
+    <input type="text" name="password" required="required" placeholder="请输入密码"  class="layui-input">
+    <br>
+    <input type="submit"  value="登  录" class="layui-btn" >
+
+
+</form>
+<script>
+    //JavaScript代码区域
+    layui.use(['element','jQuery'], function(){
+        var element = layui.element;
+        var $ =layui.jquery;
+
+    });
+</script>
+</body>
+</html>

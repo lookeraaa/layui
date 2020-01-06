@@ -31,7 +31,6 @@ public class UserController {
 
     @GetMapping("/userList")
     public String userList() {
-//        ModelAndView modelAndView =
         return "user/userList";
     }
 
