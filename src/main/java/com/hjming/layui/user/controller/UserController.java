@@ -61,6 +61,11 @@ public class UserController {
         }
     }
 
+    @GetMapping("/toAddUser")
+    public String toAddUser() {
+        return "user/addUser";
+    }
+
     @PostMapping("/saveUser")
     @ResponseBody
     public ResObject saveUser(@RequestBody User user) {
