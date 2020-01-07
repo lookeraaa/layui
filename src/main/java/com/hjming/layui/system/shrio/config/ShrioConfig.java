@@ -2,8 +2,11 @@ package com.hjming.layui.system.shrio.config;
 
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.DelegatingFilterProxy;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,18 +19,30 @@ import java.util.Map;
 @Configuration
 public class ShrioConfig {
 
-    //Filter工厂，设置对应的过滤条件和跳转条件
     @Bean
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager securityManager) {
+    public FilterRegistrationBean delegatingFilterProxy(){
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        DelegatingFilterProxy proxy = new DelegatingFilterProxy();
+        proxy.setTargetFilterLifecycle(true);
+        proxy.setTargetBeanName("shiroFilter");
+        filterRegistrationBean.setFilter(proxy);
+        return filterRegistrationBean;
+    }
+
+    //Filter工厂，设置对应的过滤条件和跳转条件
+    @Bean(name = "shiroFilter")
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("securityManager") DefaultWebSecurityManager securityManager) {
         ShiroFilterFactoryBean filterFactoryBean = new ShiroFilterFactoryBean();
         filterFactoryBean.setSecurityManager(securityManager);
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> filterChain = new HashMap<>();
 
-        map.put("/logout", "logout");
-        map.put("/toLogin", "anon"); //登录
-        map.put("/login.html", "anon"); //登录页面
-        map.put("/layui/**", "anon"); //登录页面
-        map.put("/**", "authc");//对所有用户认证
+        filterChain.put("/logout", "logout");
+        filterChain.put("/toLogin", "anon"); //登录
+        filterChain.put("/login", "anon"); //登录
+        filterChain.put("/login.html", "anon"); //登录页面
+        filterChain.put("/layui/**", "anon");
+        filterChain.put("/*.js", "anon");
+        filterChain.put("/**", "authc");//对所有用户认证
 
         //登录
         filterFactoryBean.setLoginUrl("/toLogin");
@@ -35,21 +50,21 @@ public class ShrioConfig {
         filterFactoryBean.setSuccessUrl("/index");
         //错误页面，认证不通过跳转
         filterFactoryBean.setUnauthorizedUrl("/toLogin");
-        filterFactoryBean.setFilterChainDefinitionMap(map);
+        filterFactoryBean.setFilterChainDefinitionMap(filterChain);
         return filterFactoryBean;
     }
 
     //权限管理，配置主要是Realm的管理认证
-    @Bean
-    public DefaultWebSecurityManager securityManager() {
+    @Bean("securityManager")
+    public DefaultWebSecurityManager securityManager(@Qualifier("userRealm") UserRealm userRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(myShiroRealm());
+        securityManager.setRealm(userRealm);
         return securityManager;
     }
 
     //将自己的验证方式加入容器
-    @Bean
-    public UserRealm myShiroRealm() {
+    @Bean(name = "userRealm")
+    public UserRealm userRealm() {
         UserRealm userRealm = new UserRealm();
         return userRealm;
     }

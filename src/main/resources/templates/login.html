@@ -7,23 +7,35 @@
 </head>
 <body class="layui-layout-body">
 <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
-<h1>这是登录页面</h1>
-<font color="red" th:text="${msg }"></font>
-<form action="/login" method="post">
-    <input type="text" name="username" required="required" placeholder="请输入登录名"  class="layui-input">
-    <br>
-    <input type="text" name="password" required="required" placeholder="请输入密码"  class="layui-input">
-    <br>
-    <input type="submit"  value="登  录" class="layui-btn" >
-
-
-</form>
+<div style="width: 50%;height: 50%;margin: auto;border: black 1px solid;text-align:center;">
+    <h1>这是登录页面</h1>
+    <hr>
+    <hr>
+    <div style="display: inline-block;">
+        <form action="/login" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">登录名：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" required="required" placeholder="请输入登录名" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码：</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="password" required="required" placeholder="请输入密码" class="layui-input">
+                </div>
+            </div>
+            <!--/*@thymesVar id="msg" type="java.lang.String"*/-->
+            <font color="red" th:text="${msg }"></font>
+            <input type="submit" value="登  录" class="layui-btn">
+        </form>
+    </div>
+</div>
 <script>
     //JavaScript代码区域
-    layui.use(['element','jQuery'], function(){
+    layui.use(['element', 'jQuery'], function () {
         var element = layui.element;
-        var $ =layui.jquery;
-
+        var $ = layui.jquery;
     });
 </script>
 </body>
