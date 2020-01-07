@@ -1,7 +1,6 @@
 package com.hjming.layui.system.user.service;
 
 import com.hjming.layui.system.user.dao.UserMapper;
-import com.hjming.layui.system.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +10,6 @@ import org.springframework.stereotype.Service;
  * @date 2020/1/7 15:35
  */
 @Service
-public class UserService {
+public class RoleService {
 
-    @Autowired
-    private UserMapper userMapper;
-
-    public User getUserByUsername(String username) {
-        return userMapper.getUserByUsername(username);
-    }
 }

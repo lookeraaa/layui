@@ -1,6 +1,7 @@
 package com.hjming.layui.system.controller;
 
 
+import com.hjming.layui.system.shrio.config.UserUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -25,22 +26,16 @@ public class LoginController {
         return "login";
     }
 
-//    @GetMapping("logout")
-//    public String logout() {
-//        Subject subject = SecurityUtils.getSubject();
-//        subject.logout();
-//        return "redirect:toLogin";
-//    }
 
     @PostMapping("/login")
     public String login(String username, String password, Model model) {
         //获取subject
         Subject subject = SecurityUtils.getSubject();
-
         UsernamePasswordToken token = new UsernamePasswordToken(username,password);
 
         try {
             subject.login(token);
+            model.addAttribute("name", UserUtil.getCurrentUser().getName());
             return "index";
         } catch (Exception e) {
             model.addAttribute("msg","账号或密码错误");
