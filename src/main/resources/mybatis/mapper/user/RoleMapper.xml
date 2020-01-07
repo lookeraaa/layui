@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hjming.layui.system.user.dao.RoleMapper" >
+<mapper namespace="com.hjming.layui.system.user.mapper.RoleMapper" >
 
     <resultMap id="BaseResultMap" type="com.hjming.layui.system.user.domain.Role" >
         <id column="id" property="id" jdbcType="INTEGER" />
@@ -9,10 +9,38 @@
         <result column="description" property="description" jdbcType="VARCHAR" />
         <result column="sort" property="sort" jdbcType="INTEGER" />
     </resultMap>
+    <resultMap id="rolePermissionMap" type="com.hjming.layui.system.user.domain.Role">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="rolecode" property="rolecode" jdbcType="VARCHAR" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+        <result column="sort" property="sort" jdbcType="INTEGER" />
+
+        <collection property="permissions" ofType="com.hjming.layui.system.user.domain.Permission">
+            <id column="pid" property="id" jdbcType="INTEGER" />
+            <result column="ppid" property="pid" jdbcType="INTEGER" />
+            <result column="pname" property="name" jdbcType="VARCHAR" />
+            <result column="ppermcode" property="permcode" jdbcType="VARCHAR" />
+            <result column="ptype" property="type" jdbcType="INTEGER" />
+            <result column="psort" property="sort" jdbcType="INTEGER" />
+            <result column="purl" property="url" jdbcType="VARCHAR" />
+            <result column="pdescription" property="description" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
 
     <sql id="Base_Column_List" >
         id, name, rolecode, description, sort
     </sql>
+
+    <!--获取角色的所有权限-->
+    <select id="getRolePermission" resultMap="rolePermissionMap">
+        select r.*,p.id pid,p.pid ppid,p.name pname,p.permcode ppermcode,
+        p.type ptype,p.sort psort,p.url purl,p.description pdescription
+        from role r
+        left join rolepermission rp on r.id=rp.roleid
+        left join permission p on rp.permisionid=p.id
+        where r.id=#{id}
+    </select>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         select 
@@ -26,14 +54,14 @@
         where id = #{id,jdbcType=INTEGER}
     </delete>
 
-    <insert id="insert" parameterType="Role" >
+    <insert id="insert" parameterType="com.hjming.layui.system.user.domain.Role" >
         insert into role (id, name, rolecode, 
             description, sort)
         values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{rolecode,jdbcType=VARCHAR}, 
             #{description,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER})
     </insert>
 
-    <insert id="insertSelective" parameterType="Role" >
+    <insert id="insertSelective" parameterType="com.hjming.layui.system.user.domain.Role" >
         insert into role
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="id != null" >
@@ -71,7 +99,7 @@
         </trim>
     </insert>
 
-    <update id="updateByPrimaryKeySelective" parameterType="Role" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.hjming.layui.system.user.domain.Role" >
         update role
         <set >
             <if test="name != null" >
@@ -90,7 +118,7 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
-    <update id="updateByPrimaryKey" parameterType="Role" >
+    <update id="updateByPrimaryKey" parameterType="com.hjming.layui.system.user.domain.Role" >
         update role
         set name = #{name,jdbcType=VARCHAR},
             rolecode = #{rolecode,jdbcType=VARCHAR},

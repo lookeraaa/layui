@@ -1,4 +1,4 @@
-package com.hjming.layui.system.user.dao;
+package com.hjming.layui.system.user.mapper;
 
 import com.hjming.layui.system.user.domain.User;
 import org.apache.ibatis.annotations.Mapper;
@@ -23,4 +23,6 @@ public interface UserMapper {
     List<User> selectAll();
 
     User getUserByUsername(String username);
+
+    User getUserRoleById(Integer id);
 }

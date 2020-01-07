@@ -1,4 +1,4 @@
-package com.hjming.layui.system.user.dao;
+package com.hjming.layui.system.user.mapper;
 
 import com.hjming.layui.system.user.domain.Rolepermission;
 import org.apache.ibatis.annotations.Mapper;

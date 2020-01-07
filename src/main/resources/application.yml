@@ -1,5 +1,5 @@
 server:
-  port: 9999
+  port: 80
 spring:
   application:
     name: LayerApplication
@@ -7,7 +7,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/layui?serverTimezone=UTC&userUnicode=true&characterEncoding=utf-8
     username: root
-    password: 123456
+    password: 130999
   mvc:
     static-path-pattern: /**
   resources:
@@ -20,6 +20,8 @@ spring:
 mybatis:
   mapper-locations: classpath*:mybatis/mapper/**/*.xml
   type-aliases-package: com.hjming.layui.**.domain
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 devtools:
   livereload:

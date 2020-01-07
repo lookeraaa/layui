@@ -1,9 +1,9 @@
 package com.hjming.layui.system.user.controller;
 
 import com.hjming.layui.system.shrio.config.UserUtil;
-import com.hjming.layui.system.user.dao.UserMapper;
+import com.hjming.layui.system.user.mapper.UserMapper;
 import com.hjming.layui.system.user.domain.User;
-import com.hjming.layui.util.ResObject;
+import jdk.nashorn.internal.objects.annotations.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,10 @@ public class UserController {
         return "user/userList";
     }
 
-
+    @GetMapping("/unAuth")
+    public String unAuth() {
+        return "unAuth";
+    }
     @GetMapping("/queryAllUser")
     @ResponseBody
     public List<User> queryAllUser() {

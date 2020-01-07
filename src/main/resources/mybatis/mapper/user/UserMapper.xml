@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hjming.layui.system.user.dao.UserMapper" >
+<mapper namespace="com.hjming.layui.system.user.mapper.UserMapper" >
 
     <resultMap id="BaseResultMap" type="com.hjming.layui.system.user.domain.User" >
         <id column="id" property="id" jdbcType="INTEGER" />
@@ -18,10 +18,42 @@
         <result column="headportrait" property="headportrait" jdbcType="VARCHAR" />
     </resultMap>
 
+    <resultMap id="userRolesMap" type="com.hjming.layui.system.user.domain.User">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="salt" property="salt" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="sex" property="sex" jdbcType="VARCHAR" />
+        <result column="adddate" property="adddate" jdbcType="TIMESTAMP" />
+        <result column="enabled" property="enabled" jdbcType="DECIMAL" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="headportrait" property="headportrait" jdbcType="VARCHAR" />
+
+        <collection property="roles" ofType="com.hjming.layui.system.user.domain.Role">
+            <id column="rid" property="id" jdbcType="INTEGER" />
+            <result column="rname" property="name" jdbcType="VARCHAR" />
+            <result column="rolecode" property="rolecode" jdbcType="VARCHAR" />
+            <result column="description" property="description" jdbcType="VARCHAR" />
+            <result column="sort" property="sort" jdbcType="INTEGER" />
+        </collection>
+    </resultMap>
+
     <sql id="Base_Column_List" >
         id, username, name, password, salt, address, phone, email, sex, adddate, enabled, 
         remark, headportrait
     </sql>
+
+    <!--获取用户的所有角色-->
+    <select id="getUserRoleById" resultMap="userRolesMap">
+        select u.*,r.id rid,r.name rname,r.rolecode,r.description,r.sort from user u
+        left join userrole ur on u.id=ur.userid
+        left join role r on ur.roleid = r.id
+        where u.id=#{id}
+    </select>
 
     <select id="selectAll" resultType="com.hjming.layui.system.user.domain.User">
         select

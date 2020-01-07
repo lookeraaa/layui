@@ -1,4 +1,4 @@
-package com.hjming.layui.system.user.dao;
+package com.hjming.layui.system.user.mapper;
 
 import com.hjming.layui.system.user.domain.Role;
 import org.apache.ibatis.annotations.Mapper;
@@ -18,4 +18,6 @@ public interface RoleMapper {
     int updateByPrimaryKeySelective(Role record);
 
     int updateByPrimaryKey(Role record);
+
+    Role getRolePermission(Integer id);
 }

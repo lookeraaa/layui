@@ -1,5 +1,7 @@
 package com.hjming.layui.system.user.domain;
 
+import java.util.Set;
+
 /**
  * 
  * 
@@ -32,6 +34,11 @@ public class Role {
      * 排序
      */
     private Integer sort;
+
+    /**
+     * 权限
+     */
+    private Set<Permission> permissions;
 
     public Integer getId() {
         return id;
@@ -71,5 +78,13 @@ public class Role {
 
     public void setSort(Integer sort) {
         this.sort = sort;
+    }
+
+    public Set<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
     }
 }

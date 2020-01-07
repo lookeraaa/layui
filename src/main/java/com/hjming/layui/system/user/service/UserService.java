@@ -1,6 +1,6 @@
 package com.hjming.layui.system.user.service;
 
-import com.hjming.layui.system.user.dao.UserMapper;
+import com.hjming.layui.system.user.mapper.UserMapper;
 import com.hjming.layui.system.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,5 +18,9 @@ public class UserService {
 
     public User getUserByUsername(String username) {
         return userMapper.getUserByUsername(username);
+    }
+
+    public User getUserRole(Integer id) {
+        return userMapper.getUserRoleById(id);
     }
 }

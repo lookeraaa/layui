@@ -1,0 +1,20 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>错误页面</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+</head>
+<body class="layui-layout-body">
+<script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+<h1>这是未授权页面</h1>
+<script>
+    //JavaScript代码区域
+    layui.use(['element','jQuery'], function(){
+        var element = layui.element;
+        var $ =layui.jquery;
+
+    });
+</script>
+</body>
+</html>

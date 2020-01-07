@@ -24,6 +24,11 @@ public class Permission {
     private String name;
 
     /**
+     * 权限编码
+     */
+    private String permcode;
+
+    /**
      * 权限类型：1：菜单 0：功能
      */
     private Integer type;
@@ -65,6 +70,14 @@ public class Permission {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public String getPermcode() {
+        return permcode;
+    }
+
+    public void setPermcode(String permcode) {
+        this.permcode = permcode;
     }
 
     public Integer getType() {

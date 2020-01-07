@@ -1,7 +1,5 @@
 package com.hjming.layui.system.user.service;
 
-import com.hjming.layui.system.user.dao.UserMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**

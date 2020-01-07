@@ -2,6 +2,7 @@ package com.hjming.layui.system.user.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * 
@@ -73,6 +74,12 @@ public class User {
      */
     private String headportrait;
 
+    /**
+     * 角色
+     */
+    private Set<Role> roles;
+
+    
     public Integer getId() {
         return id;
     }
@@ -176,4 +183,12 @@ public class User {
     public void setHeadportrait(String headportrait) {
         this.headportrait = headportrait == null ? null : headportrait.trim();
     }
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.hjming.layui.system.shrio.config;
 
+import com.hjming.layui.system.user.domain.User;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,20 +37,23 @@ public class ShrioConfig {
         filterFactoryBean.setSecurityManager(securityManager);
         Map<String, String> filterChain = new HashMap<>();
 
+        filterChain.put("/static/**", "anon");
         filterChain.put("/logout", "logout");
         filterChain.put("/toLogin", "anon"); //登录
         filterChain.put("/login", "anon"); //登录
         filterChain.put("/login.html", "anon"); //登录页面
-        filterChain.put("/layui/**", "anon");
         filterChain.put("/*.js", "anon");
+        filterChain.put("/userList", "perms[system:manager:usermanager]");
         filterChain.put("/**", "authc");//对所有用户认证
+
 
         //登录
         filterFactoryBean.setLoginUrl("/toLogin");
         //首页
         filterFactoryBean.setSuccessUrl("/index");
+
         //错误页面，认证不通过跳转
-        filterFactoryBean.setUnauthorizedUrl("/toLogin");
+        filterFactoryBean.setUnauthorizedUrl("/unAuth");
         filterFactoryBean.setFilterChainDefinitionMap(filterChain);
         return filterFactoryBean;
     }

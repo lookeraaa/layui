@@ -1,6 +1,9 @@
 package com.hjming.layui.system.shrio.config;
 
+import com.hjming.layui.system.user.domain.Permission;
+import com.hjming.layui.system.user.domain.Role;
 import com.hjming.layui.system.user.domain.User;
+import com.hjming.layui.system.user.service.RoleService;
 import com.hjming.layui.system.user.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -8,6 +11,7 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -22,12 +26,26 @@ public class UserRealm extends AuthorizingRealm {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleService roleService;
     /**
      * 授权认证
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return null;
+
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        //授予角色权限
+        User user = userService.getUserRole(UserUtil.getCurrentUser().getId());
+        for (Role role : user.getRoles()) {
+            info.addRole(role.getRolecode());
+            Role rolePer = roleService.getRolePermission(role.getId());
+            for (Permission permission : rolePer.getPermissions()) {
+                info.addStringPermission(permission.getPermcode());
+            }
+
+        }
+        return info;
     }
 
     /**
@@ -37,8 +55,7 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         System.out.println("登录认证");
         User user = userService.getUserByUsername(token.getPrincipal().toString());
-
-        if (!user.getUsername().equals(token.getPrincipal().toString())) {
+        if (user == null) {
             return null;
         }
 
