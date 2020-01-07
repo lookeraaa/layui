@@ -1,11 +1,11 @@
 server:
-  port: 80
+  port: 9999
 spring:
   application:
     name: LayerApplication
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/test?serverTimezone=UTC&userUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/layui?serverTimezone=UTC&userUnicode=true&characterEncoding=utf-8
     username: root
     password: 123456
   mvc:
@@ -19,7 +19,7 @@ spring:
 
 mybatis:
   mapper-locations: classpath*:mybatis/mapper/**/*.xml
-  type-aliases-package: com.hjming.layui.*.domain
+  type-aliases-package: com.hjming.layui.**.domain
 
 devtools:
   livereload:

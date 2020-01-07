@@ -1,11 +1,14 @@
 package com.hjming.layui.system.shrio.config;
 
+import com.hjming.layui.system.user.domain.User;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 
 /**
@@ -30,13 +33,18 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         System.out.println("登录认证");
-        String username = "admin";
-        String password = "admin";
+        User user = new User();
+        user.setUsername("admin");
+        user.setPassword("admin");
 
-        if (!username.equals(token.getPrincipal().toString())) {
+        if (!user.getUsername().equals(token.getPrincipal().toString())) {
             return null;
         }
 
-        return new SimpleAuthenticationInfo(token.getPrincipal(),password,"userRealm");
+        Session session = SecurityUtils.getSubject().getSession();
+        session.setAttribute("user", user);
+
+        return new SimpleAuthenticationInfo(token.getPrincipal(),user.getPassword(),"userRealm");
     }
+
 }
