@@ -1,5 +1,6 @@
 package com.hjming.layui.system.user.mapper;
 
+import com.hjming.layui.system.user.domain.Role;
 import com.hjming.layui.system.user.domain.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -25,4 +26,6 @@ public interface UserMapper {
     User getUserByUsername(String username);
 
     User getUserRoleById(Integer id);
+
+    List<Role> getRoles(Integer id);
 }

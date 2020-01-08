@@ -62,7 +62,7 @@
     </select>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-        select 
+        select
         <include refid="Base_Column_List" />
         from user
         where id = #{id,jdbcType=INTEGER}
@@ -73,6 +73,11 @@
         from user
         where username=#{username,jdbcType=VARCHAR}
     </select>
+    <select id="getRoles" resultType="com.hjming.layui.system.user.domain.Role">
+        select r.* from role r
+            INNER JOIN userrole ur on r.id = ur.roleid
+            where ur.userid=#{id}
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
         delete from user
@@ -80,15 +85,15 @@
     </delete>
 
     <insert id="insert" parameterType="User" >
-        insert into user (id, username, name, 
-            password, salt, address, 
-            phone, email, sex, 
-            adddate, enabled, remark, 
+        insert into user (id, username, name,
+            password, salt, address,
+            phone, email, sex,
+            adddate, enabled, remark,
             headportrait)
-        values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-            #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-            #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
-            #{adddate,jdbcType=TIMESTAMP}, #{enabled,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR}, 
+        values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+            #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+            #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR},
+            #{adddate,jdbcType=TIMESTAMP}, #{enabled,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR},
             #{headportrait,jdbcType=VARCHAR})
     </insert>
 

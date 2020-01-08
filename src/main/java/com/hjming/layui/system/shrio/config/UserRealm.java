@@ -3,6 +3,7 @@ package com.hjming.layui.system.shrio.config;
 import com.hjming.layui.system.user.domain.Permission;
 import com.hjming.layui.system.user.domain.Role;
 import com.hjming.layui.system.user.domain.User;
+import com.hjming.layui.system.user.service.PermissionService;
 import com.hjming.layui.system.user.service.RoleService;
 import com.hjming.layui.system.user.service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -17,6 +18,8 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 /**
  * @author hjm10
  * @version 1.0
@@ -28,6 +31,8 @@ public class UserRealm extends AuthorizingRealm {
     private UserService userService;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private PermissionService permissionService;
     /**
      * 授权认证
      */
@@ -35,16 +40,16 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        //授予角色权限
-        User user = userService.getUserRole(UserUtil.getCurrentUser().getId());
-        for (Role role : user.getRoles()) {
-            info.addRole(role.getRolecode());
-            Role rolePer = roleService.getRolePermission(role.getId());
-            for (Permission permission : rolePer.getPermissions()) {
-                info.addStringPermission(permission.getPermcode());
-            }
-
+        //授予角色
+        for (Role role : userService.getRoles()) {
+            info.addRole(role.getName());
         }
+        //授予权限
+        List<Permission> permissions = permissionService.getFPermissions();
+        for (Permission permission : permissions) {
+            info.addStringPermission(permission.getPermcode());
+        }
+
         return info;
     }
 

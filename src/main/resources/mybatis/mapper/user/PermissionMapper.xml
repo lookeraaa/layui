@@ -14,8 +14,26 @@
     </resultMap>
 
     <sql id="Base_Column_List" >
-        id, pid, name,permcode, type, sort, url, description
+        id, pid, name, permcode, type, sort, url, description
     </sql>
+
+
+    <select id="getMPermissions" resultType="com.hjming.layui.system.user.domain.Permission">
+        SELECT p.* FROM permission p
+            INNER JOIN rolepermission rp on p.id=rp.permisionid
+            INNER JOIN role r ON  r.id=rp.roleid
+            INNER JOIN userrole  ur ON ur.roleid =rp.roleid
+            INNER JOIN user u ON u.id = ur.userid
+            where u.id=#{id } and type=1 order by p.sort
+    </select>
+    <select id="getFPermissions" resultType="com.hjming.layui.system.user.domain.Permission">
+        SELECT p.* FROM permission p
+            INNER JOIN rolepermission rp on p.id=rp.permisionid
+            INNER JOIN role r ON r.id=rp.roleid
+            INNER JOIN userrole ur ON ur.roleid =rp.roleid
+            INNER JOIN user u ON u.id = ur.userid
+            where u.id=#{id } and type=0 order by p.sort
+    </select>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         select 
@@ -23,6 +41,7 @@
         from permission
         where id = #{id,jdbcType=INTEGER}
     </select>
+
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
         delete from permission
