@@ -1,5 +1,7 @@
 package com.hjming.layui.system.user.domain;
 
+import java.util.List;
+
 /**
  * 
  * 
@@ -47,6 +49,11 @@ public class Permission {
      * 描述
      */
     private String description;
+    /**
+     * 子菜单集合
+     */
+    private List<Permission> childrenList;
+
 
     public Integer getId() {
         return id;
@@ -110,5 +117,13 @@ public class Permission {
 
     public void setDescription(String description) {
         this.description = description == null ? null : description.trim();
+    }
+
+    public List<Permission> getChildrenList() {
+        return childrenList;
+    }
+
+    public void setChildrenList(List<Permission> childrenList) {
+        this.childrenList = childrenList;
     }
 }

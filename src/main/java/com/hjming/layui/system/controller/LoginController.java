@@ -1,7 +1,7 @@
 package com.hjming.layui.system.controller;
 
 
-import com.hjming.layui.system.shrio.config.UserUtil;
+import com.hjming.layui.system.shiro.config.UserUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;

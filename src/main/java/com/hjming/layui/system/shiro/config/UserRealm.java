@@ -1,4 +1,4 @@
-package com.hjming.layui.system.shrio.config;
+package com.hjming.layui.system.shiro.config;
 
 import com.hjming.layui.system.user.domain.Permission;
 import com.hjming.layui.system.user.domain.Role;
@@ -38,7 +38,7 @@ public class UserRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-
+        System.out.println("授权认证");
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         //授予角色
         for (Role role : userService.getRoles()) {

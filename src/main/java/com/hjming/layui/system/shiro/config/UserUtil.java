@@ -1,4 +1,4 @@
-package com.hjming.layui.system.shrio.config;
+package com.hjming.layui.system.shiro.config;
 
 import com.hjming.layui.system.user.domain.User;
 import org.apache.shiro.SecurityUtils;

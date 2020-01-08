@@ -1,9 +1,10 @@
 package com.hjming.layui.system.user.controller;
 
-import com.hjming.layui.system.shrio.config.UserUtil;
+import com.hjming.layui.system.shiro.config.UserUtil;
+import com.hjming.layui.system.user.domain.Permission;
 import com.hjming.layui.system.user.mapper.UserMapper;
 import com.hjming.layui.system.user.domain.User;
-import jdk.nashorn.internal.objects.annotations.Getter;
+import com.hjming.layui.system.user.service.PermissionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private PermissionService permissionService;
+
     Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("index")
@@ -47,6 +51,11 @@ public class UserController {
         return userMapper.selectAll();
     }
 
+    @GetMapping("getMenu")
+    @ResponseBody
+    public List<Permission> getMenu() {
+        return permissionService.getParentMeun();
+    }
 
 
 }

@@ -1,6 +1,6 @@
 package com.hjming.layui.system.user.service;
 
-import com.hjming.layui.system.shrio.config.UserUtil;
+import com.hjming.layui.system.shiro.config.UserUtil;
 import com.hjming.layui.system.user.domain.Role;
 import com.hjming.layui.system.user.mapper.UserMapper;
 import com.hjming.layui.system.user.domain.User;
