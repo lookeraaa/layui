@@ -19,6 +19,7 @@ import java.util.List;
  * @date 2020/1/4 16:53
  */
 @Controller
+@RequestMapping("system")
 public class UserController {
     @Autowired
     private UserMapper userMapper;
@@ -34,20 +35,18 @@ public class UserController {
 
     @GetMapping("/userList")
     public String userList() {
-        return "user/userList";
+        return "system/user/userList";
     }
 
     @GetMapping("/unAuth")
     public String unAuth() {
         return "unAuth";
     }
-    @GetMapping("/queryAllUser")
+
+
+    @GetMapping("/queryUser")
     @ResponseBody
     public List<User> queryAllUser() {
-
-        User currentUser = UserUtil.getCurrentUser();
-        System.out.println(currentUser);
-
         return userMapper.selectAll();
     }
 

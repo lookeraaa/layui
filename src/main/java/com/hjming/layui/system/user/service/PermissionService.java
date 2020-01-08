@@ -83,4 +83,7 @@ public class PermissionService {
         return  childrenList;
     }
 
+    public List<Permission> queryPermission() {
+        return permissionMapper.queryAll();
+    }
 }

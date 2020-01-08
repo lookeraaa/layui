@@ -48,6 +48,11 @@
         from role
         where id = #{id,jdbcType=INTEGER}
     </select>
+    <select id="selectAllRole" resultType="com.hjming.layui.system.user.domain.Role">
+        select
+        <include refid="Base_Column_List"/>
+        from role
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
         delete from role

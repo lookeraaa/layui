@@ -24,4 +24,6 @@ public interface PermissionMapper {
     List<Permission> getMPermissions(Integer id);
 
     List<Permission> getFPermissions(Integer id);
+
+    List<Permission> queryAll();
 }

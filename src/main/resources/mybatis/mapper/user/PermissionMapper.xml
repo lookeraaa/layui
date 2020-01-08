@@ -41,6 +41,11 @@
         from permission
         where id = #{id,jdbcType=INTEGER}
     </select>
+    <select id="queryAll" resultType="com.hjming.layui.system.user.domain.Permission">
+        select
+        <include refid="Base_Column_List"/>
+        from permission
+    </select>
 
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

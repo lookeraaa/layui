@@ -31,6 +31,15 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
+    @Bean
+    public FilterRegistrationBean delegatingFilterProxy(){
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        DelegatingFilterProxy proxy = new DelegatingFilterProxy();
+        proxy.setTargetFilterLifecycle(true);
+        proxy.setTargetBeanName("shiroFilter");
+        filterRegistrationBean.setFilter(proxy);
+        return filterRegistrationBean;
+    }
     //Filter工厂，设置对应的过滤条件和跳转条件
     @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("securityManager") DefaultWebSecurityManager securityManager) {
@@ -50,9 +59,9 @@ public class ShiroConfig {
         //登录
         filterFactoryBean.setLoginUrl("/toLogin");
         //首页
-        filterFactoryBean.setSuccessUrl("/index");
+        filterFactoryBean.setSuccessUrl("/system/index");
         //错误页面，认证不通过跳转
-        filterFactoryBean.setUnauthorizedUrl("/unAuth");
+        filterFactoryBean.setUnauthorizedUrl("/system/unAuth");
         filterFactoryBean.setFilterChainDefinitionMap(filterChain);
         return filterFactoryBean;
     }
@@ -70,16 +79,6 @@ public class ShiroConfig {
     public UserRealm userRealm() {
         UserRealm userRealm = new UserRealm();
         return userRealm;
-    }
-
-    @Bean
-    public FilterRegistrationBean delegatingFilterProxy(){
-        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
-        DelegatingFilterProxy proxy = new DelegatingFilterProxy();
-        proxy.setTargetFilterLifecycle(true);
-        proxy.setTargetBeanName("shiroFilter");
-        filterRegistrationBean.setFilter(proxy);
-        return filterRegistrationBean;
     }
 
 

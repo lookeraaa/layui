@@ -5,6 +5,7 @@ import com.hjming.layui.system.user.mapper.RoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -20,5 +21,9 @@ public class RoleService {
 
     public Role getRolePermission(Integer id) {
         return roleMapper.getRolePermission(id);
+    }
+
+    public List<Role> queryRole() {
+        return roleMapper.selectAllRole();
     }
 }

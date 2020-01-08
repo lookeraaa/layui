@@ -65,7 +65,7 @@
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <iframe src="/userList" frameborder="0" id="iframeContent" style="width: 100%; height: 100%;"></iframe>
+        <iframe src="" frameborder="0" id="iframeContent" style="width: 100%; height: 100%;"></iframe>
     </div>
 
 
@@ -81,7 +81,6 @@
     layui.use('element', function () {
         var $ = layui.jquery
             , element = layui.element;
-
         element.on('nav(demo)', function (elem) {
             //console.log(elem.getAttribute("meun_id")); //得到当前点击的DOM对象
             var id = $(this).attr("meun_id");
@@ -100,7 +99,7 @@
         //获取所有的菜单
         $.ajax({
             type: "GET",
-            url: "/getMenu",
+            url: "/system/getMenu",
             dataType: "json",
             success: function (data) {
                 //先添加所有的主材单
@@ -119,6 +118,11 @@
             }
         });
 
+
+        window.changeMenu = function (url) {
+            $("#iframeContent").attr("src", url);
+        };
+
         //组装子菜单的方法
         function loadchild(obj) {
             if (obj == null) {
@@ -133,7 +137,7 @@
             if (obj.childrenList != null && obj.childrenList.length > 0) {
                 $.each(obj.childrenList, function (i, note) {
                     content += '<dd>';
-                    content += '<a href="javascript:;">' + note.name + '</a>';
+                    content += '<a href="javascript:;" onclick="changeMenu(\'' + note.url + '\')">' + note.name + '</a>';
                     if (note.childrenList == null) {
                         return;
                     }
