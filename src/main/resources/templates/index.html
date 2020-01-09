@@ -129,16 +129,16 @@
                 return;
             }
             var content = '';
-            if (obj.childrenList != null && obj.childrenList.length > 0) {
+            if (obj.children != null && obj.children.length > 0) {
                 content += '<dl class="layui-nav-child">';
             } else {
                 content += '<dl>';
             }
-            if (obj.childrenList != null && obj.childrenList.length > 0) {
-                $.each(obj.childrenList, function (i, note) {
+            if (obj.children != null && obj.children.length > 0) {
+                $.each(obj.children, function (i, note) {
                     content += '<dd>';
                     content += '<a href="javascript:;" onclick="changeMenu(\'' + note.url + '\')">' + note.name + '</a>';
-                    if (note.childrenList == null) {
+                    if (note.children == null) {
                         return;
                     }
                     content += loadchild(note);

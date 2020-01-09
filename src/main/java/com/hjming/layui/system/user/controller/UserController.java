@@ -50,18 +50,6 @@ public class UserController {
         return userMapper.selectAll();
     }
 
-    @GetMapping("getMenu")
-    @ResponseBody
-    public List<Permission> getMenu() {
-        return permissionService.getParentMeun();
-    }
-
-    @GetMapping("getPermission")
-    @ResponseBody
-    public List<Permission> getPermission() {
-        return permissionService.getPermission();
-    }
-
 
 
 }

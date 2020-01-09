@@ -1,0 +1,55 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+</head>
+<body>
+<div style="margin-top: 20px;display: inline-block;text-align: center;">
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">权限：</label>
+            <div class="layui-input-block">
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                </fieldset>
+                <div id="permTree" class="demo-tree-more"></div>
+            </div>
+        </div>
+    </form>
+    <div>
+        <button style="margin: auto;" class="layui-btn layui-btn-normal">保存</button>
+    </div>
+
+</div>
+
+<script th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    //JavaScript代码区域
+    layui.use(['form', 'tree', 'jquery'], function () {
+        var tree = layui.tree;
+        var $ = layui.jquery;
+        //渲染
+        var inst1 = tree.render({
+            elem: '#permTree'  //绑定元素
+            , showCheckbox: true
+           , showLine: false  //是否开启连接线
+            ,data: [{
+                title: '江西' //一级菜单
+                ,children: [{
+                    title: '南昌' //二级菜单
+                    ,children: [{
+                        title: '高新区' //三级菜单
+                        //…… //以此类推，可无限层级
+                    }]
+                }]
+            },{
+                title: '陕西' //一级菜单
+                ,children: [{
+                    title: '西安' //二级菜单
+                }]
+            }]
+        });
+    });
+</script>
+</body>
+</html>

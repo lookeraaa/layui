@@ -39,4 +39,12 @@ public class RoleController {
     public List<Role> queryRole() {
         return roleService.queryRole();
     }
+
+    /**
+     * 跳转到角色授权页面
+     */
+    @GetMapping("toGrantAuth")
+    public String toGrantAuth(Integer id) {
+        return "/system/role/grantAuth";
+    }
 }

@@ -48,6 +48,7 @@ public class ShiroConfig {
         Map<String, String> filterChain = new HashMap<>();
         filterChain.put("/layui/**", "anon");
         filterChain.put("/treeTable/**", "anon");
+        filterChain.put("/treeSelect/**", "anon");
         filterChain.put("/logout", "logout");
         filterChain.put("/toLogin", "anon"); //登录
         filterChain.put("/login", "anon"); //登录

@@ -34,7 +34,7 @@
                 isPidData: true  // 是否是pid形式数据
             },
             cols: [
-                {type: 'checkbox', fixed: 'left'},
+                {type: 'radio', fixed: 'left'},
                 {field: 'id', title: 'ID'},
                 {field: 'name', title: '权限（菜单）名称'},
                 {field: 'permcode', title: '权限编码'},
@@ -46,7 +46,6 @@
                 {field: 'description', title: '描述'}
             ],
             reqData: function(data, callback) {
-                debugger;
                 // 在这里写ajax请求，通过callback方法回调数据
                 $.get('/system/getPermission', function (res) {
                     callback(res);  // 参数是数组类型

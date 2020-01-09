@@ -27,4 +27,8 @@ public interface PermissionMapper {
 
     List<Permission> queryAll();
 
+    /**
+     * 获取所有菜单
+     */
+    List<Permission> getAllMenu();
 }

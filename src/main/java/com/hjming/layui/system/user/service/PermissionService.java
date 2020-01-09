@@ -3,14 +3,11 @@ package com.hjming.layui.system.user.service;
 import com.hjming.layui.system.shiro.config.UserUtil;
 import com.hjming.layui.system.user.domain.Permission;
 import com.hjming.layui.system.user.mapper.PermissionMapper;
-import org.apache.shiro.crypto.hash.Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author hjming
@@ -22,6 +19,25 @@ public class PermissionService {
 
     @Autowired
     private PermissionMapper permissionMapper;
+
+    /**
+     * 获取所有的菜单
+     * @return
+     */
+    public List<Permission> getAllMenu() {
+        List<Permission> list = permissionMapper.getAllMenu();
+        List<Permission> rootPermission = new ArrayList<>();
+        for (Permission info:list){
+            if (info.getPid() == 0) {
+                rootPermission.add(info);
+            }
+        }
+        for (Permission info:rootPermission){
+            List<Permission> childrenList= getChildrenMeun(info.getId(),list);
+            info.setChildren(childrenList);
+        }
+        return rootPermission;
+    }
 
     /**
      * 获取角色所有的权限（菜单）
@@ -57,7 +73,7 @@ public class PermissionService {
             //获取所有子菜单 递归
             List<Permission> childrenList= getChildrenMeun(info.getId(),list);
             //这个是实体类中的子菜单集合
-            info.setChildrenList(childrenList);
+            info.setChildren(childrenList);
         }
         return rootMeun;
     }
@@ -76,7 +92,7 @@ public class PermissionService {
         }
         //这里就是递归了，遍历所有的子菜单
         for (Permission info:childrenList){
-            info.setChildrenList(getChildrenMeun(info.getId(),allMeun));
+            info.setChildren(getChildrenMeun(info.getId(),allMeun));
         }
         //如果子菜单为空的话，那就说明某菜单下没有子菜单了，直接返回空,子菜单为空的话就不会继续
         //迭代了
@@ -107,8 +123,12 @@ public class PermissionService {
             //获取所有子菜单 递归
             List<Permission> childrenList= getChildrenMeun(info.getId(),list);
             //这个是实体类中的子菜单集合
-            info.setChildrenList(childrenList);
+            info.setChildren(childrenList);
         }
         return rootPermission;
+    }
+
+    public void savePermission(Permission permission) {
+        permissionMapper.insert(permission);
     }
 }

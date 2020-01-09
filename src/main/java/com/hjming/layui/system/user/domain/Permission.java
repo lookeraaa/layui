@@ -52,7 +52,7 @@ public class Permission {
     /**
      * 子菜单集合
      */
-    private List<Permission> childrenList;
+    private List<Permission> children;
 
 
     public Integer getId() {
@@ -119,11 +119,11 @@ public class Permission {
         this.description = description == null ? null : description.trim();
     }
 
-    public List<Permission> getChildrenList() {
-        return childrenList;
+    public List<Permission> getChildren() {
+        return children;
     }
 
-    public void setChildrenList(List<Permission> childrenList) {
-        this.childrenList = childrenList;
+    public void setChildren(List<Permission> children) {
+        this.children = children;
     }
 }

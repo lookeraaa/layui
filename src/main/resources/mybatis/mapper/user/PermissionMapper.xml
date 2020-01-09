@@ -36,7 +36,7 @@
     </select>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-        select 
+        select
         <include refid="Base_Column_List" />
         from permission
         where id = #{id,jdbcType=INTEGER}
@@ -46,7 +46,12 @@
         <include refid="Base_Column_List"/>
         from permission
     </select>
-
+    <select id="getAllMenu" resultType="com.hjming.layui.system.user.domain.Permission">
+        select
+        id, pid, name
+        from permission
+        where type= 1
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
         delete from permission
@@ -54,12 +59,10 @@
     </delete>
 
     <insert id="insert" parameterType="Permission" >
-        insert into permission (id, pid, name, 
-            type, sort, url, 
-            description)
-        values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
-            #{type,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, 
-            #{description,jdbcType=VARCHAR})
+        insert into permission (id, pid, name, permcode,type, sort, url,description)
+        values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+             #{permcode,jdbcType=VARCHAR},#{type,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER},
+             #{url,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR})
     </insert>
 
     <insert id="insertSelective" parameterType="Permission" >

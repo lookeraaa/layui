@@ -52,7 +52,7 @@ layui.define(['layer', 'laytpl', 'form'], function (exports) {
         var treeDefaultOption = {
             idName: 'id',  // id的字段名
             pidName: 'pid',  // pid的字段名
-            childName: 'childrenList',  // children的字段名
+            childName: 'children',  // children的字段名
             haveChildName: 'haveChild',  // 是否有children标识的字段名
             openName: 'open',  // 是否默认展开的字段名
             isPidData: false,  // 是否是pid形式的数据
