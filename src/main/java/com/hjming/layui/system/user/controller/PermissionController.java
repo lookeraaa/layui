@@ -38,4 +38,8 @@ public class PermissionController {
         return permissionService.queryPermission();
     }
 
+    @GetMapping("toAddPermission")
+    public String toAddPermission(Integer id) {
+        return "system/permission/addPermission";
+    }
 }

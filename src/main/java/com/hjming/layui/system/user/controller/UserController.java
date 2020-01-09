@@ -56,5 +56,12 @@ public class UserController {
         return permissionService.getParentMeun();
     }
 
+    @GetMapping("getPermission")
+    @ResponseBody
+    public List<Permission> getPermission() {
+        return permissionService.getPermission();
+    }
+
+
 
 }

@@ -7,87 +7,66 @@
 <body>
 <div class="layui-layout layui-layout-admin">
     <hr class="layui-bg-green">
-    <button class="layui-btn" onclick="addUser()"><i class="layui-icon">&#xe608;</i>添加</button>
+    <button class="layui-btn" onclick="addPermission()"><i class="layui-icon">&#xe608;</i>添加</button>
     <button class="layui-btn"><i class="layui-icon">&#xe642;</i>修改</button>
-    <button class="layui-btn" onclick="deleteUser()"><i class="layui-icon">&#xe640;</i>删除</button>
+    <button class="layui-btn" onclick="deletePermission()"><i class="layui-icon">&#xe640;</i>删除</button>
     <button class="layui-btn" onclick="searchData()"><i class="layui-icon">&#xe615;</i>查询</button>
 
     <table id="table" lay-filter="table"></table>
 </div>
 <script th:src="@{/layui/layui.js}"></script>
 <script type="text/javascript" th:inline="javascript">
-    //JavaScript代码区域
-    layui.use(['element', 'table', 'jquery'], function () {
-        var element = layui.element;
+    layui.config({
+        base: '../../../'
+    }).extend({
+        treeTable: '/treeTable/treeTable'
+    }).use(['treeTable','element','jquery'], function () {
+        var tree = layui.treeTable;
         var $ = layui.jquery;
-        var table = layui.table;
-        //第一个实例
-        table.render({
-            id: 'userTable',
-            elem: '#table',
-            url: '/system/queryPermission', //数据 接口
-            page: true, //开启分页
-            parseData: function (res) {
-                console.log(res);
-                return {
-                    "code": 0,
-                    "msg": "",
-                    "count": 1000,
-                    data: res
-                }
+        tree.render({
+            id: 'permissionTable',
+            text: {
+                none: '<div style="padding: 18px 0;">哎呀，一条数据都没有~</div>'
             },
-            cols: [[ //表头
+            elem: '#table',
+            tree: {
+                iconIndex: 1,  // 折叠图标显示在第几列
+                isPidData: true  // 是否是pid形式数据
+            },
+            cols: [
                 {type: 'checkbox', fixed: 'left'},
-                {field: 'id', title: 'ID', sort: true, fixed: 'left'},
-                {field: 'pid', title: '父ID', sort: true, fixed: 'left'},
-                {field: 'name', title: '权限（菜单）名称', sort: true, fixed: 'left'},
-                {field: 'type', title: '类型', sort: true, fixed: 'left',templet:function (d) {
-                        return d.title = 1 ? '菜单' : '权限';
+                {field: 'id', title: 'ID'},
+                {field: 'name', title: '权限（菜单）名称'},
+                {field: 'permcode', title: '权限编码'},
+                {field: 'url', title: '权限菜单'},
+                {field: 'type', title: '类型', templet: function (d) {
+                        return d.title = 1 ? '菜单' : '按钮';
                     }},
-                {field: 'permcode', title: '权限编码', sort: true, fixed: 'left'},
-                {field: 'url', title: '菜单URL', sort: true, fixed: 'left'},
-                {field: 'description', title: '描述', sort: true, fixed: 'left'}
-            ]]
+                {field: 'sort', title: '排序'},
+                {field: 'description', title: '描述'}
+            ],
+            reqData: function(data, callback) {
+                debugger;
+                // 在这里写ajax请求，通过callback方法回调数据
+                $.get('/system/getPermission', function (res) {
+                    callback(res);  // 参数是数组类型
+                });
+            }
         });
-
         //查询
         window.searchData = function () {
-            table.reload('userTable');
+            tree.reload('permissionTable');
         };
 
-        window.addUser = function () {
+        window.addPermission = function () {
             layer.open({
                 type: 2,
-                area : ['550px', '500px'],
-                title: '添加用户',
-                content: 'toAddUser', //这里content是一个URL，
-                // 如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
+                area : ['550px', '600px'],
+                title: '添加权限',
+                content: 'toAddPermission' //这里content是一个URL，
             });
         };
 
-        //删除用户（物理）
-        window.deleteUser = function () {
-            var checkData = table.checkStatus('userTable');
-            var data = checkData.data;//[{},{}]
-            var length = checkData.data.length;
-            var ids = [];
-            if (length > 0) {
-                for (var i = 0; i < length; i++) {
-                    console.log(data[i].id);
-                    ids.push(data[i].id)
-                }
-            }
-            $.ajax({
-                url: 'deleteUser',
-                method: 'post',
-                data: {ids:ids},
-                dataType: "json",
-                traditional: true,
-                success: function (res) {
-                    table.reload('userTable');
-                }
-            })
-        }
     });
 </script>
 </body>

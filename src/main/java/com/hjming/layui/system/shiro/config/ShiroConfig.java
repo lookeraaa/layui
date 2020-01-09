@@ -46,8 +46,8 @@ public class ShiroConfig {
         ShiroFilterFactoryBean filterFactoryBean = new ShiroFilterFactoryBean();
         filterFactoryBean.setSecurityManager(securityManager);
         Map<String, String> filterChain = new HashMap<>();
-        filterChain.put("/static/**", "anon");
         filterChain.put("/layui/**", "anon");
+        filterChain.put("/treeTable/**", "anon");
         filterChain.put("/logout", "logout");
         filterChain.put("/toLogin", "anon"); //登录
         filterChain.put("/login", "anon"); //登录

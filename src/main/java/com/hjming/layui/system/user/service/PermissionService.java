@@ -3,11 +3,14 @@ package com.hjming.layui.system.user.service;
 import com.hjming.layui.system.shiro.config.UserUtil;
 import com.hjming.layui.system.user.domain.Permission;
 import com.hjming.layui.system.user.mapper.PermissionMapper;
+import org.apache.shiro.crypto.hash.Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author hjming
@@ -85,5 +88,27 @@ public class PermissionService {
 
     public List<Permission> queryPermission() {
         return permissionMapper.queryAll();
+    }
+
+    public List<Permission> getPermission() {
+        List<Permission> list = permissionMapper.queryAll();
+
+        //创建一个集合用于保存所有的主菜单
+        List<Permission> rootPermission = new ArrayList<>();
+        //遍历所有菜单集合,如果是主菜单的话直接放入rootPermission集合
+        for (Permission info:list){
+            //判断为0是因为我的主菜单标识是0
+            if (info.getPid() == 0) {
+                rootPermission.add(info);
+            }
+        }
+        //这个是遍历所有主菜单,分别获取所有主菜单的所有子菜单
+        for (Permission info:rootPermission){
+            //获取所有子菜单 递归
+            List<Permission> childrenList= getChildrenMeun(info.getId(),list);
+            //这个是实体类中的子菜单集合
+            info.setChildrenList(childrenList);
+        }
+        return rootPermission;
     }
 }
