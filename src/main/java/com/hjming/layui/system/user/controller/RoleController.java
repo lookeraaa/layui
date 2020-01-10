@@ -7,13 +7,15 @@ import com.hjming.layui.system.user.domain.User;
 import com.hjming.layui.system.user.mapper.UserMapper;
 import com.hjming.layui.system.user.service.PermissionService;
 import com.hjming.layui.system.user.service.RoleService;
+import com.hjming.layui.util.ResObject;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -43,8 +45,22 @@ public class RoleController {
     /**
      * 跳转到角色授权页面
      */
-    @GetMapping("toGrantAuth")
-    public String toGrantAuth(Integer id) {
+    @GetMapping("toGrantAuth/{id}")
+    public String toGrantAuth(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("roleId", id);
         return "/system/role/grantAuth";
+    }
+
+    @PostMapping("grantAuth")
+    @ResponseBody
+    @Transactional
+    public ResObject grantAuth(@RequestBody Integer perIds[],Integer roleId) {
+        try {
+            roleService.grantAuth(roleId, perIds);
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

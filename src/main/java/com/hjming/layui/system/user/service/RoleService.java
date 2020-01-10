@@ -19,11 +19,27 @@ public class RoleService {
     @Autowired
     private RoleMapper roleMapper;
 
+    @Autowired
+    private RolePermissionService rolePermissionService;
+
     public Role getRolePermission(Integer id) {
         return roleMapper.getRolePermission(id);
     }
 
     public List<Role> queryRole() {
         return roleMapper.selectAllRole();
+    }
+
+    /**
+     * 授权
+     * @param roleId 角色id
+     * @param perIds 权限ids[]
+     */
+    public void grantAuth(Integer roleId, Integer[] perIds) {
+        for (Integer perId : perIds) {
+            rolePermissionService.deleteRolePermission(roleId);
+
+            rolePermissionService.grantAuth(roleId, perId);
+        }
     }
 }

@@ -7,6 +7,7 @@
 <body>
 <div style="margin-top: 20px;display: inline-block;text-align: center;">
     <form class="layui-form">
+        <input type="hidden" id="roleId" name="roleId" th:value="${roleId}">
         <div class="layui-form-item">
             <label class="layui-form-label">权限：</label>
             <div class="layui-input-block">
@@ -17,9 +18,8 @@
         </div>
     </form>
     <div>
-        <button style="margin: auto;" class="layui-btn layui-btn-normal">保存</button>
+        <button onclick="submitTree()" style="margin: auto;" class="layui-btn layui-btn-normal">保存</button>
     </div>
-
 </div>
 
 <script th:src="@{/layui/layui.js}"></script>
@@ -28,27 +28,56 @@
     layui.use(['form', 'tree', 'jquery'], function () {
         var tree = layui.tree;
         var $ = layui.jquery;
+        var roleId = $("#roleId").val();
+        var ids = [];
         //渲染
-        var inst1 = tree.render({
-            elem: '#permTree'  //绑定元素
-            , showCheckbox: true
-           , showLine: false  //是否开启连接线
-            ,data: [{
-                title: '江西' //一级菜单
-                ,children: [{
-                    title: '南昌' //二级菜单
-                    ,children: [{
-                        title: '高新区' //三级菜单
-                        //…… //以此类推，可无限层级
-                    }]
-                }]
-            },{
-                title: '陕西' //一级菜单
-                ,children: [{
-                    title: '西安' //二级菜单
-                }]
-            }]
+        $.get({
+            url:'/system/getPermission',
+            type: 'get',
+            success:function (res) {
+                if (res != null) {
+                    var resStr = JSON.stringify(res);
+                    resStr = resStr.replace(/name/g, "title");
+                    res = JSON.parse(resStr);
+                    tree.render({
+                        id: 'perTr',
+                        elem:'#permTree',
+                        showCheckbox: true,
+                        accordion:true,//手风琴模式
+                        showLine: false,  //关闭连接线
+                        data: res
+                    });
+                }
+            }
         });
+        $.get({
+            url: '/system/getRolePermission?roleId='+roleId,
+            success: function (res) {
+                if (res == null) {
+                    return;
+                }
+                for (var i = 0; i < res.length; i++) {
+                    ids.push(res[i].id);
+                }
+                console.log(ids);
+                tree.setChecked('perTr', ids);
+            }
+        });
+        window.submitTree =function () {
+            debugger;
+            alert(roleId);
+            var x =tree.getChecked('perTr', ids);
+            alert(x[0].id);
+            $.post({
+                url:'/system/grantAuth?roleId='+roleId,
+                contentType: 'application/json; charset=UTF-8',
+                dataType: "json",
+                data: JSON.stringify(ids),
+                success:function (res) {
+                    console.log(res)
+                }
+            });
+        }
     });
 </script>
 </body>

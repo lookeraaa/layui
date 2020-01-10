@@ -31,4 +31,9 @@ public interface PermissionMapper {
      * 获取所有菜单
      */
     List<Permission> getAllMenu();
+
+    /**
+     * 获取roleId的所有权限
+     */
+    List<Permission> getRolePermission(Integer roleId);
 }

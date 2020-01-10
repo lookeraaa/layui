@@ -18,4 +18,8 @@ public interface RolepermissionMapper {
     int updateByPrimaryKeySelective(Rolepermission record);
 
     int updateByPrimaryKey(Rolepermission record);
+
+    void deleteRolePermission(Integer roleId);
+
+    void grantAuth(Integer roleId, Integer perId);
 }

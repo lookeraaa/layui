@@ -20,6 +20,10 @@ public class PermissionService {
     @Autowired
     private PermissionMapper permissionMapper;
 
+    public List<Permission> getRolePermission(Integer roleId) {
+        return permissionMapper.getRolePermission(roleId);
+    }
+
     /**
      * 获取所有的菜单
      * @return

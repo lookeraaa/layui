@@ -52,6 +52,13 @@
         from permission
         where type= 1
     </select>
+    <select id="getRolePermission" resultType="com.hjming.layui.system.user.domain.Permission">
+        select
+            p.*
+        from permission p
+        left join rolepermission rp on p.id=rp.permisionid
+        where rp.roleid=#{roleId,jdbcType=INTEGER}
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
         delete from permission

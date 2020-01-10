@@ -23,6 +23,10 @@
         delete from rolepermission
         where id = #{id,jdbcType=INTEGER}
     </delete>
+    <delete id="deleteRolePermission">
+        delete from rolepermission
+        where roleid = #{roleId,jdbcType=INTEGER}
+    </delete>
 
     <insert id="insert" parameterType="Rolepermission" >
         insert into rolepermission (id, roleid, permisionid
@@ -55,6 +59,10 @@
                 #{permisionid,jdbcType=INTEGER},
             </if>
         </trim>
+    </insert>
+    <insert id="grantAuth">
+        insert into rolepermission(id,roleid,permisionid)
+        values (null,#{roleId,jdbcType=INTEGER},#{perId,jdbcType=INTEGER})
     </insert>
 
     <update id="updateByPrimaryKeySelective" parameterType="Rolepermission" >
